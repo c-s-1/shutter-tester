@@ -32,7 +32,7 @@ threshold in a way that it'll work even in daylight conditions.
 
 The setup of all components looks like this:
 
-(https://github.com/c-s-1/shutter-tester/raw/master/img/Shutter-Tester.png "Breadboard view of Shutter Tester")
+![Breadboard view of Shutter Tester](https://github.com/c-s-1/shutter-tester/raw/master/img/Shutter-Tester.png )
 
 *Note: It's a good idea to unsolder the IR emitting diode and to re-attach it using a sufficiently long pair of wires so that
 it can be place on the opposite side of the shutter. It may be possible to leave the IR emitter and receiver on the same side
@@ -108,3 +108,5 @@ that the shutter was fired:
 
 Pressing the reset button will reset the exposure counter, the speed, the minimum and maximum speeds. This allows for a new
 round of tests e. g. on different shutter speed setting.
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Shutter Tester README</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">c-s-1</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
