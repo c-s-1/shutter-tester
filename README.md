@@ -41,7 +41,7 @@ the input pins as** `INPUT_PULLUP` **because otherwise you might damage your Ard
 it can be place on the opposite side of the shutter. It may be possible to leave the IR emitter and receiver on the same side
 and to use a mirror, however, it's hard to get satisfying results.*
 
-To upload the code to your Arduino, open [src/shutter-tester.ino](https://raw.githubusercontent.com/c-s-1/shutter-tester/master/src/shutter-tester.ino) in the Arduino IDE and upload it to your Arduino Uno R3.
+To upload the code to your Arduino, open [src/shutter-tester.ino](https://raw.githubusercontent.com/c-s-1/shutter-tester/master/src/shutter-tester/shutter-tester.ino) in the Arduino IDE and upload it to your Arduino Uno R3.
 You only need to do this once or whenever you want to update the code.
 
 ## User Manual
