@@ -64,7 +64,7 @@ Place the components on opposite sides of the shutter:
                      ||------
 IR emitter           |          +----------------------------+
 +----------=>        |         <=   Main unit w/ IR receiver |
-|                    |          +---------------+------------+
+|                    |Shutter   +---------------+------------+
 |                    ||------                   |
 |             |       |                         |
 |             +-------+                         |
