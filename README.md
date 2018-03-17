@@ -34,6 +34,9 @@ The setup of all components looks like this:
 
 ![Breadboard view of Shutter Tester](https://github.com/c-s-1/shutter-tester/raw/master/img/Shutter-Tester.png )
 
+**Warning: The inputs of the buttons use the internal pullup resistors of the Arduino Uno R3. Make sure to always initialise
+the input pins as** `INPUT_PULLUP` **because otherwise you might damage your Arduino.**
+
 *Note: It's a good idea to unsolder the IR emitting diode and to re-attach it using a sufficiently long pair of wires so that
 it can be place on the opposite side of the shutter. It may be possible to leave the IR emitter and receiver on the same side
 and to use a mirror, however, it's hard to get satisfying results.*
