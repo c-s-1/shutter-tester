@@ -32,7 +32,7 @@ threshold in a way that it'll work even in daylight conditions.
 
 The setup of all components looks like this:
 
-`Insert image`
+(https://github.com/c-s-1/shutter-tester/raw/master/img/Shutter-Tester.png "Breadboard view of Shutter Tester")
 
 *Note: It's a good idea to unsolder the IR emitting diode and to re-attach it using a sufficiently long pair of wires so that
 it can be place on the opposite side of the shutter. It may be possible to leave the IR emitter and receiver on the same side
