@@ -2,7 +2,7 @@
 
 ## Disclaimer
 
-This is my first Arduino project and also my first project on github so please be patient with me. ;) The shutter tester seems to work resonably well for long exposures (1/250s or less).
+This is my first Arduino project and also my first project on github so please be patient with me. ;) The shutter tester seems to work resonably well for long exposures (1/250s or longer).
 I'm not entirely sure about shorter exposure times so take the results with a grain of salt. It works for me, your mileage may vary.
 The assembly requires soldering skills if you want to detach the IR emitting diode. Don't try this if you
 don't know how to solder.<sup>1</sup> You assemble and use the Shutter Tester at your own risk.
@@ -19,7 +19,7 @@ an attempt to help with measuring and calibrating a shutter and to provide a too
 The Arduino platform is a cheap and convenient way to build a shutter tester. To achieve this, the tester consists of the following components:
 
 * an Arduino Uno R3,
-* a 20 character, 4 lines LCD to display results,
+* a 20 character, 4 lines LCD to display results (LCD 2004 with a I<sup>2</sup>C module),
 * a reset button to reset the tests,
 * a light toggle button to toggle the LCD’s backlight,
 * an IR emitter and receiver module<sup>2</sup> that acts as the "shutter open / closed" sensor.
