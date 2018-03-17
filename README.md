@@ -37,6 +37,8 @@ The setup of all components looks like this:
 **Warning: The inputs of the buttons use the internal pullup resistors of the Arduino Uno R3. Make sure to always initialise
 the input pins as** `INPUT_PULLUP` **because otherwise you might damage your Arduino.**
 
+The reset button is attached to D3, the light toggle button is attached to D4.
+
 *Note: It's a good idea to unsolder the IR emitting diode and to re-attach it using a sufficiently long pair of wires so that
 it can be place on the opposite side of the shutter. It may be possible to leave the IR emitter and receiver on the same side
 and to use a mirror, however, it's hard to get satisfying results.*
