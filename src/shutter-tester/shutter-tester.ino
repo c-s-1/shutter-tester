@@ -28,7 +28,7 @@
 LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 // Version
-const String version = "v0.1";
+const String version = "v0.2";
 // Pin for IR sensor
 const byte interruptPin = 2;
 // Pin for reset button
@@ -44,12 +44,16 @@ int exposure = 0;
 // Store the minimum and maximum exposure of a test run
 unsigned long mintime = 0;
 unsigned long maxtime = 0;
+// Sum of times
+unsigned long sum = 0;
 String mintime_s = "";
 String maxtime_s = "";
 // Store if LCD light should be on or off
 boolean light = false;
 
 void setup() {
+  // Initialise serial line for printing CSVs of results.
+  Serial.begin(9600);
   // Initialise pin for IR sensor input and attach an interrupt to it
   pinMode(interruptPin, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(interruptPin), exp, CHANGE);
@@ -91,7 +95,9 @@ void setup_lcd() {
   */
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Exp. #" + String(exposure));
+  lcd.print("Exp #" + String(exposure));
+  lcd.setCursor(8, 0);
+  lcd.print("Avg:");
   lcd.setCursor(0, 1);
   lcd.print("Speed:");
   lcd.setCursor(0, 2);
@@ -102,7 +108,7 @@ void setup_lcd() {
 
 void loop() {
   // If the reset button is pressed, reset shutter test.
-  if (digitalRead(buttonPin) == LOW)
+  if (digitalRead(buttonPin) == LOW or exposure == 100)
   {
     reset();
   }
@@ -117,23 +123,14 @@ void loop() {
   // print the measured result.
   if (exposed)
   {
+    unsigned long timed;
     String s = "";
     exposure++;
     if (start_time > 0 && start_time < end_time)
     {
       // Calculate time difference between start and end of exposure in microseconds.
-      unsigned long timed = end_time - start_time;
-      // To get readable output, distinguish between
-      if (timed >= 1000000)
-      {
-        // Format shutter times >1s.
-        s = String((float)timed / 1000000.0);
-      }
-      else
-      {
-        // Format shutter times <1s.
-        s = String("1/" + String(int(1.0 / (timed / 1000000.0))));
-      }
+      timed = end_time - start_time;
+      s = t_to_string(timed);
       // Check if the last exposure is a new minimum.
       if (timed < mintime || mintime == 0)
       {
@@ -147,29 +144,58 @@ void loop() {
         maxtime_s = s;
       }
     }
-    print_result(s);
+    sum += timed;
+    unsigned long avg = sum / exposure;
+    print_result(s, t_to_string(avg));
+    Serial.println(String(exposure) + "," + String(timed) + "," + String(mintime) + "," + String(maxtime) + "," + String(avg));
     exposed = false;
   }
 }
 
-void print_result(String s) {
+void print_result(String s, String avg) {
   /*
      Method for LCD output of results.
   */
-  lcd.setCursor(6, 0);
+  lcd.setCursor(5, 0);
+  lcd.print("   ");
+  lcd.setCursor(5, 0);
   lcd.print(String(exposure));
+  lcd.setCursor(13, 0);
+  lcd.print("       ");
+  lcd.setCursor(13, 0);
+  lcd.print(avg);
   lcd.setCursor(7, 1);
   lcd.print("            ");
   lcd.setCursor(7, 1);
-  lcd.print(s + "s");
+  lcd.print(s);
   lcd.setCursor(5, 2);
   lcd.print("               ");
   lcd.setCursor(5, 2);
-  lcd.print(mintime_s + "s");
+  lcd.print(mintime_s);
   lcd.setCursor(5, 3);
   lcd.print("               ");
   lcd.setCursor(5, 3);
-  lcd.print(maxtime_s + "s");
+  lcd.print(maxtime_s);
+}
+
+String t_to_string(unsigned long timed) {
+  /*
+     Method for formating unsigned long timed (measured speed in microseconds)
+     to a string "x.xs" for speeds over 1s and "1/xs" for speeds unter a
+     second. Returns string of converted time.
+  */
+  String s = "";
+  if (timed >= 1000000)
+  {
+    // Format shutter times >1s.
+    s = String((float)timed / 1000000.0);
+  }
+  else
+  {
+    // Format shutter times <1s.
+    s = String("1/" + String(int(1.0 / (timed / 1000000.0))));
+  }
+  return s;
 }
 
 void exp() {
@@ -213,18 +239,12 @@ void reset() {
   /*
      Method for resetting the LCD's content and some variables.
   */
-  lcd.setCursor(6, 0);
-  lcd.print("0             ");
-  lcd.setCursor(7, 1);
-  lcd.print("            ");
-  lcd.setCursor(5, 2);
-  lcd.print("               ");
-  lcd.setCursor(5, 3);
-  lcd.print("               ");
   exposed = false;
   exposure = 0;
+  sum = 0;
   mintime = 0;
   maxtime = 0;
   mintime_s = "";
   maxtime_s = "";
+  setup_lcd();
 }
