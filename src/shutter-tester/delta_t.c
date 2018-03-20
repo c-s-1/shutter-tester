@@ -10,7 +10,7 @@ uint8_t state = 0;
 
 void delta_t_arm() {
   TCCR1A = TCCR1B = TCCR1C = TIMSK1 = 0; // Reset all TIMER1 config register
-  TCCR1B = (1 << CS12); // 256 prescaler
+  TCCR1B = (0 << ICES1) | (1 << CS12); // Input Capture Edge Select, 256 prescaler
   TIMSK1 = (1 << ICIE1) | (1 << OCIE1A); // Input Capture Interrupt Enable, Output Compare A Match Interrupt Enable
 
   steps = 0;
@@ -25,14 +25,14 @@ void delta_t_disarm() {
 }
 
 float delta_t_get() {
-  if (!state) {
+  if (!state && (steps || steps_ovf) {
     float steps_per_second = F_CPU / 256.0;
     return  steps_per_second / (float) steps + steps_per_second / (float) steps_ovf * UINT16_MAX;
   }
-  return 0;
+  return 0.0;
 }
 
-ISR(TIMER1_OVF_vect) {
+ISR(TIMER1_COMPA_vect) {
   if (state == 2)
     steps_ovf++;
 }
