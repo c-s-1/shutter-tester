@@ -9,6 +9,7 @@ don't know how to solder.<sup>1</sup> You assemble and use the Shutter Tester at
 
 <sup>1</sup>If you don't know how to solder, you can use a light detector module with a digital output pin and an adjustable
 threshold instead of an IR module.
+
 ## Introduction
 
 Camera enthusiasts know the problem that the shutters of old cameras often lose their calibration over time. This project is
@@ -92,27 +93,37 @@ After firing the shutter, the measured speed is displayed on the screen:
 
 ```
 +--------------------+
-|Exp. #1             |
-|Speed:1/31s         |
-|Min:  1/31s         |
-|Max:  1/31s         |
+|Exp #1  Avg: 1/31   |
+|Speed: 1/31         |
+|Min: 1/31           |
+|Max: 1/31           |
 +--------------------+
 ```
 
-The Shutter Tester also records the minimum and maximum speeds of a test run. The exposure counter counts the number of times
+The Shutter Tester also records the minimum and maximum speeds of a test run as well as the average speed. The exposure counter counts the number of times
 that the shutter was fired:
 
 ```
 +--------------------+
-|Exp. #16            |
-|Speed:1/29s         |
-|Min:  1/32s         |
-|Max:  1/28s         |
+|Exp #16 Avg: 1/30   |
+|Speed: 1/29         |
+|Min: 1/32           |
+|Max: 1/28           |
 +--------------------+
 ```
 
+Due to the space constraints of the LCD, the test will automatically reset after 99 exposures.
+
+The Shutter Tester prints a CSVs of each test to the serial line at 9600 baud. Each line contains the following values:
+
+```
+<exposure#>,<speed>,<minimum speed>,<maximum speed>,<average speed>
+```
+
+All speed values are printed as microsecond values. The CSV lines can be pasted to a spreadsheet or some other program for further evaluation. You need to set up the serial monitor of your Arduino IDE to see the serial output.
+
 Pressing the reset button will reset the exposure counter, the speed, the minimum and maximum speeds. This allows for a new
-round of tests e. g. on different shutter speed setting.
+round of tests e. g. on a different shutter speed setting.
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Shutter Tester README and breadboard view</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">c-s-1</span> are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
 
