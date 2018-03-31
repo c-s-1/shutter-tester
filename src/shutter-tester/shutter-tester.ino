@@ -24,11 +24,18 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-// Initialise an LCD
+/*
+   Initialise an LCD
+
+   Please note that some I2C chips use a different address. If your display
+   doesn't display anything, comment the active line and uncomment the other
+   line.
+*/
 LiquidCrystal_I2C lcd(0x27, 20, 4);
+//LiquidCrystal_I2C lcd(0x3F, 20, 4);
 
 // Version
-const String version = "v0.2";
+const String version = "v0.3";
 // Pin for IR sensor
 const byte interruptPin = 2;
 // Pin for reset button
@@ -193,7 +200,7 @@ String t_to_string(unsigned long timed) {
   else
   {
     // Format shutter times <1s.
-    s = String("1/" + String(int(1.0 / (timed / 1000000.0))));
+    s = String("1/" + String(int(1.0 / (float(timed) / 1000000.0))));
   }
   return s;
 }

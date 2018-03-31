@@ -47,6 +47,11 @@ and to use a mirror, however, it's hard to get satisfying results.*
 To upload the code to your Arduino, open [src/shutter-tester/shutter-tester.ino](https://raw.githubusercontent.com/c-s-1/shutter-tester/master/src/shutter-tester/shutter-tester.ino) in the Arduino IDE and upload it to your Arduino Uno R3.
 You only need to do this once or whenever you want to update the code.
 
+## Troubleshooting / FAQ
+
+* Q: My LCD doesn't show anything, the LED backlight only lights up.
+* A: Some I<sup>2</sup>C modules use different addresses than others. In the LCD initialisation line `LiquidCrystal_I2C lcd();` try addresses `0x27` or `0x3F`. If both don't work, try using a I<sup>2</sup>C scanner sketch (there're many available) and use the address that it detects.
+
 ## User Manual
 
 ### Setting up the Shutter Tester
