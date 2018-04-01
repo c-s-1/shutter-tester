@@ -2,7 +2,7 @@
 
 This changelog lists all notable changes to the project.
 
-## [v0.3]
+## v0.3
 
 ### Added
 
@@ -14,7 +14,7 @@ This changelog lists all notable changes to the project.
 
 - Use milliseconds instead of microseconds to avoid overflow problems.
 
-## [v0.2]
+## v0.2
 
 ### Added
 
@@ -26,6 +26,6 @@ This changelog lists all notable changes to the project.
 - Code restructuring.
 - Reset button flapping prevention.
 
-## [v0.1]
+## v0.1
 
 - Initial release.
