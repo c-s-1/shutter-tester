@@ -24,11 +24,18 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-// Initialise an LCD
+/*
+   Initialise an LCD
+
+   Please note that some I2C chips use a different address. If your display
+   doesn't display anything, comment the active line and uncomment the other
+   line.
+*/
 LiquidCrystal_I2C lcd(0x27, 20, 4);
+//LiquidCrystal_I2C lcd(0x3F, 20, 4);
 
 // Version
-const String version = "v0.2";
+const String version = "v0.3";
 // Pin for IR sensor
 const byte interruptPin = 2;
 // Pin for reset button
@@ -128,7 +135,7 @@ void loop() {
     exposure++;
     if (start_time > 0 && start_time < end_time)
     {
-      // Calculate time difference between start and end of exposure in microseconds.
+      // Calculate time difference between start and end of exposure in milliseconds.
       timed = end_time - start_time;
       s = t_to_string(timed);
       // Check if the last exposure is a new minimum.
@@ -180,20 +187,20 @@ void print_result(String s, String avg) {
 
 String t_to_string(unsigned long timed) {
   /*
-     Method for formating unsigned long timed (measured speed in microseconds)
+     Method for formating unsigned long timed (measured speed in milliseconds)
      to a string "x.xs" for speeds over 1s and "1/xs" for speeds unter a
      second. Returns string of converted time.
   */
   String s = "";
-  if (timed >= 1000000)
+  if (timed >= 1000)
   {
     // Format shutter times >1s.
-    s = String((float)timed / 1000000.0);
+    s = String((float)timed / 1000.0);
   }
   else
   {
     // Format shutter times <1s.
-    s = String("1/" + String(int(1.0 / (timed / 1000000.0))));
+    s = String("1/" + String(int(1.0 / (float(timed) / 1000.0))));
   }
   return s;
 }
@@ -202,7 +209,7 @@ void exp() {
   /*
      Method called by interrupt attached to IR sensor output.
   */
-  unsigned long temp_time = micros();
+  unsigned long temp_time = millis();
   // Pin is LOW if IR sensor detects IR (i. e. shutter is open).
   if (digitalRead(interruptPin) == LOW)
   {
